@@ -4,6 +4,7 @@
 [![arXiv.org](https://img.shields.io/badge/arXiv-1109.0887-b31b1b.svg)](https://arxiv.org/abs/1109.0887)
 [![Python Versions](https://img.shields.io/pypi/pyversions/rgf_python.svg)](https://pypi.org/project/rgf_python)
 [![PyPI Version](https://badge.fury.io/py/rgf_python.svg)](https://badge.fury.io/py/rgf_python)
+[![Downloads](https://pepy.tech/badge/rgf-python)](https://pepy.tech/project/rgf-python)
 [![CRAN Version](https://r-pkg.org/badges/version/RGF)](https://cran.r-project.org/package=RGF)
 
 # Regularized Greedy Forest
