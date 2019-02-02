@@ -3,25 +3,16 @@ image: Visual Studio 2015
 
 platform:
   - x64
-  - x86
 
 environment:
   global:
     R_LIB_PATH: C:\RLibrary
   matrix:
-    - PYTHON_VERSION: 2.7
-    - PYTHON_VERSION: 3.4
-    - PYTHON_VERSION: 3.5
-    - PYTHON_VERSION: 3.6
-    - PYTHON_VERSION: 3.7
     - PYTHON_VERSION: 3.6
       TASK: R_PACKAGE
 
-matrix:
-  exclude:
-    - platform: x86
-      PYTHON_VERSION: 3.6
-      TASK: R_PACKAGE
+init:
+  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 install:
   - set PATH=%PATH:C:\Program Files\Git\usr\bin;=%  # Delete sh.exe from PATH (mingw32-make fix)
@@ -54,7 +45,6 @@ install:
   - pip install dist\rgf_python-%RGF_VER%.tar.gz -v
 
 test_script:
-  - pytest tests/ -v
   - ps: >-
       if($env:TASK -eq "R_PACKAGE") {
           cd $env:APPVEYOR_BUILD_FOLDER;
@@ -75,6 +65,9 @@ after_test:
     ELSE (
     python setup.py bdist_wheel --plat-name=win32 --universal)
   - IF NOT "%PLATFORM%" == "x64" rename compile\RGF\bin\rgf.exe rgf32.exe
+
+on_finish:
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 cache:
   - '%R_LIB_PATH%'
